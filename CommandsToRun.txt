@@ -1,0 +1,91 @@
+Kafka:-
+
+
+Docker:-
+
+sudo apt update
+sudo apt install maven
+sudo apt install default-jdk
+sudo apt install docker.io
+<Give ubntu PWD> and press Y
+sudo docker --version
+Enable docker:
+sudo systemctl status docker [If Dead run below] -- [pressQ to exit status window]
+sudo systemctl enable -- now docker [Still not work re-start system]
+sudo docker run Hello-world
+MySql:
+sudo docker pull mysql
+sudo docker exec -it mysql-docker bash
+Command: mysql -uroot  -proot
+
+sudo docker run --name mysql-standlone -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=test -e MYSQL_USER=sa -e mySQL_PASSWORD=password -d mysql:5.6
+sudo docker network create <network-review>
+sudo docker network ls
+sudo docker run --name mysql-review --network network-review -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=reviewdb -d mysql
+sudo docker run -d -p 8081:8081 --name review-one --network network-review review-image-one 
+--- running on: http://172.19.0.2:8761/
+
+sudo docker container ls
+sudo docker image ls
+----- After changes in spring boot app we need to build docker image-------
+before build image we need to build application using [mvn clean install]
+sodu docker build -t users-mysql .{current directory i.e project path where Dockerfile present}
+ANOTHER way[have to be at Dockerfile path]: sudo docker build -f Dockerfile -f eureka-image-one .
+sudo docker images
+sudo docker run -p 9090:8888 spring-config-server [only spring app] --mine
+sudo docker run -p 8086:8086 --name users-mysql --link mysql-standlone:mysql -d users-mysql [run docker with my sql and spring]
+sudo docker container ls
+sudo dodcker logs mysql-standlone
+sudo docker logs users-mysql
+
+browser - http://localhost:8086/all/
+
+stop docker: sudo docker stop users-mysql
+sudo docker image rm -f <users-mysql> [if volume isue comes remove taht as well]
+sudo docker volume rm <name> -- not sure
+sudo docker container rm -f <name>
+sudo docker image re users-mysql
+sudo docker images
+<re build with same name and mysql>
+
+sudo docker container ls
+
+Command to know ip address: curl ifconfig.me
+
+Review API;-
+
+
+Config:-
+
+
+Eureka:-
+
+
+Customer API:-
+
+http://20.49.27.63:9090/test/server
+http://rascw83502dns.eastus2.cloudapp.azure.com:9090/test/server
+http://172.17.0.5:9090/test/server --check
+Zuul:-
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+# .\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions --topic TestTopic
+
+mvn clean install -DskipTests
+
+http://localhost:8888/config-server/devlopment or http://localhost:9090/test/server
+http://localhost:9090/config-server/devlopment
+
+http://localhost:8761/
+
+http://localhost:8080/review-service/review/1
+http://zuul-service/review-service/review/1 -- not working
+
+http://localhost:8082/swagger-ui.html#/customer-controller/updateCustomerUsingPUT
+
+2021-07-27 15:11:47.071  INFO 2964 --- [nio-8081-exec-7] c.e.r.service.reviewService.Producer     : Feedback created -> FeedbackDto [reviewDetails=Nice Food, rating=4, customerId=1, reviewId=1, note=Thank you]
+2021-07-27 15:15:27.108  INFO 2964 --- [trap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2021-07-27 15:16:59.651  INFO 2964 --- [nio-8081-exec-8] c.e.r.service.reviewService.Producer     : Feedback created -> FeedbackDto [reviewDetai
